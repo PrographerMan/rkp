@@ -1,0 +1,237 @@
+<td class="p-3">
+	{{this.item.KOD}}
+</td>
+<td class="p-3">
+	{{#if (eq this.item.TYPE "Рабочий")}}
+		<span class="badge text-bg-success">
+			{{this.item.TYPE}}
+		</span>
+	{{else}}
+		<span class="badge text-bg-primary">
+			{{this.item.TYPE}}
+		</span>
+	{{/if}}
+</td>
+<td class="p-3">
+	{{this.item.KC}}
+</td>
+<td class="p-3">
+	{{this.item.CATEGORY}}
+</td>
+<td class="p-3">
+	{{this.item.ETKS}}
+</td>
+<td class="p-3">
+	{{this.item.OKZ}}
+</td>
+<td class="p-3">
+	{{this.item.NAME}}
+</td>
+<td class="p-3">
+	<div class="calculation-form">
+		<button onclick={{action 'toggleForm'}} class="btn {{if this.formVisible 'btn-light' 'btn-success'}}" type="button">
+			{{#if this.formVisible}}
+				Закрыть
+			{{else}}
+				Получить
+			{{/if}}
+		</button>
+		{{#if this.formVisible}}
+			<div class="calculation-form__form border p-3 shadow rounded bg-light">
+				{{#if (eq this.item.TYPE "Рабочий")}}
+				<div>
+					<div class="row mb-2">
+						<div class="col">
+							<label for="exampleFormControlInput1" class="form-label mb-1">Тарифный разряд</label>
+							<select onchange={{action "setTR" value="target.value"}} class="form-select">
+								<option selected value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+							</select>
+						</div>
+						<div class="col">
+							<label for="exampleFormControlInput1" class="form-label mb-1">Квалификация</label>
+							<select onchange={{action "setQualification" value="target.value"}} class="form-select">
+								<option selected value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+							</select>
+						</div>
+					</div>
+					<div class="row mb-2">
+						<div class="col">
+							<label for="exampleFormControlInput1" class="form-label mb-1">Форма оплаты труда</label>
+							<select onchange={{action "setPaymentFormat" value="target.value"}} class="form-select">
+								<option value="10">Сдельная</option>
+								<option value="11">Прямая</option>
+								<option value="12">Прямая</option>
+								<option value="12">Прогрессивная</option>
+								<option value="20">Повременная</option>
+								<option value="21">Простая</option>
+								<option value="22">Премиальная</option>
+							</select>
+						</div>
+						<div class="col">
+							<label for="exampleFormControlInput1" class="form-label mb-1">Условия труда</label>
+							<select onchange={{action "setWorkingConditions" value="target.value"}} class="form-select">
+								<option value="1">Нормальные</option>
+								<option value="2">Тяжелые и вредные</option>
+								<option value="3">Особо тяжелые и особо вредные</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="mb-3">
+					<label for="exampleFormControlInput1" class="form-label mb-1">Степень механизации</label>
+					<select onchange={{action "setLaborAutomation" value="target.value"}} class="form-select">
+						<option value="1">Выполняющие работу на автоматах, автоматизированных агрегатах, установках, аппаратах</option>
+						<option value="2">Выполняющие работу при помощи машин и механизмов</option>
+						<option value="3">Выполняющие работу вручную при машинах и механизмах</option>
+						<option value="4">Выполняющие работу вручную не при машинах и механизмах</option>
+						<option value="5">Выполняющие работу вручную по наладке и ремонту машин и механизмов</option>
+					</select>
+				</div>
+				<span class="calculation-form__title">ОКПДТР:</span>
+				<div class="calculation-form__code mb-3">
+					{{!-- <div class="calculation-form__code-item">
+						<abbr title="1" class="calculation-form__code-text">1</abbr>
+					</div> --}}
+					<div class="calculation-form__code-item">
+						<abbr title="Код профессии" class="calculation-form__code-text">{{this.item.KOD}}</abbr>
+					</div>
+					<div class="calculation-form__code-item">
+						<abbr title="Контрольное число" class="calculation-form__code-text">{{this.item.KC}}</abbr>
+					</div>
+					<div class="calculation-form__code-item">
+						<abbr title="Номер выпуска ЕТКС" class="calculation-form__code-text">{{this.item.ETKS}}</abbr>
+					</div>
+					<div class="calculation-form__code-item">
+						<abbr title="Код по ОКЗ" class="calculation-form__code-text">{{this.item.OKZ}}</abbr>
+					</div>
+					<div class="calculation-form__code-item">
+						<abbr title="Тарифный разряд" class="calculation-form__code-text">{{this.TR}}</abbr>
+					</div>
+					<div class="calculation-form__code-item">
+						<abbr title="Квалификация" class="calculation-form__code-text">{{this.qualification}}</abbr>
+					</div>
+					<div class="calculation-form__code-item">
+						<abbr title="Форма оплаты труда" class="calculation-form__code-text">{{this.paymentFormat}}</abbr>
+					</div>
+					<div class="calculation-form__code-item">
+						<abbr title="Устровия труда" class="calculation-form__code-text">{{this.workingConditions}}</abbr>
+					</div>
+					<div class="calculation-form__code-item">
+						<abbr title="Степень механизации труда" class="calculation-form__code-text">{{this.laborAutomation}}</abbr>
+					</div>
+				</div>
+				<div class="d-grid gap-2">
+					<button onclick={{action 'copyToClipboard'}} class="btn btn-primary" type="button">
+						{{#if this.codeCopied}}
+							Скопировано!
+						{{else}}
+							Копировать
+						{{/if}}
+					</button>
+				</div>
+				{{else}}
+					<div>
+						<div class="row mb-2">
+							<div class="col">
+								<label class="form-label mb-1">Код произв. должности</label>
+								<div class="d-flex align-items-center">
+									<div>
+										<input onchange={{action 'toggleQualificationEmployeeChecked'}} checked={{this.qualificationEmployeeChecked}} class="form-check-input calculation-form__checkbox" type="radio" name="qualificationEmployee"/>
+									</div>
+									<div>
+										<select disabled={{(not this.qualificationEmployeeChecked)}} onchange={{action "setCurrentPosition" value="target.value"}} class="form-select">
+											<option value="01">Вице -</option>
+											<option value="02">Первый заместитель руководителя</option>
+											<option value="03">Заместитель</option>
+											<option value="04">Главный</option>
+											<option value="05">Ведущий</option>
+											<option value="06">Старший</option>
+											<option value="07">Младший</option>
+											<option value="08">Сменный</option>
+											<option value="09">Первый</option>
+											<option value="10">Второй</option>
+											<option value="11">Третий</option>
+											<option value="12">Четвертый</option>
+											<option value="13">Помощник руководителя и специалиста</option>
+											<option value="14">Старший помощник</option>
+											<option value="15">Первый помощник</option>
+											<option value="16">Второй помощник</option>
+											<option value="17">Третий помощник</option>
+											<option value="18">Четвертый помощник</option>
+											<option value="19">Пятый помощник</option>
+											<option value="20">Сменный помощник</option>
+											<option value="21">Групповой</option>
+											<option value="22">Бригадный</option>
+											<option value="23">Районный</option>
+											<option value="24">Участковый</option>
+											<option value="25">Горный</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<label class="form-label mb-1">Квалификация</label>
+								<div class="d-flex align-items-center">
+									<div>
+										<input onchange={{action 'toggleQualificationEmployeeChecked'}} checked={{(not this.qualificationEmployeeChecked)}} class="form-check-input calculation-form__checkbox" type="radio" name="qualificationEmployee"/>
+									</div>
+									<div>
+										<select disabled={{this.qualificationEmployeeChecked}} onchange={{action "setQualificationEmployee" value="target.value"}} class="form-select">
+											<option value="1">Первая</option>
+											<option value="2">Вторая</option>
+											<option value="3">Третья</option>
+											<option value="4">Четвертая</option>
+											<option value="5">Пятая</option>
+											<option value="6">Шестая</option>
+											<option value="7">Высшая</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<span class="calculation-form__title">ОКПДТР:</span>
+					<div class="calculation-form__code mb-3">
+						<div class="calculation-form__code-item">
+							<abbr title="Код профессии" class="calculation-form__code-text">{{this.item.KOD}}</abbr>
+						</div>
+						<div class="calculation-form__code-item">
+							<abbr title="Контрольное число" class="calculation-form__code-text">{{this.item.KC}}</abbr>
+						</div>
+						<div class="calculation-form__code-item">
+							<abbr title="Код категории должности" class="calculation-form__code-text">{{this.item.CATEGORY}}</abbr>
+						</div>
+						<div class="calculation-form__code-item">
+							<abbr title="Код по ОКЗ" class="calculation-form__code-text">{{this.item.OKZ}}</abbr>
+						</div>
+						{{#if this.qualificationEmployeeChecked}}
+							<div class="calculation-form__code-item">
+								<abbr title="Код производной должности" class="calculation-form__code-text">{{this.currentPosition}}</abbr>
+							</div>
+						{{else}}
+							<div class="calculation-form__code-item">
+								<abbr title="Квалификация" class="calculation-form__code-text">{{this.qualificationEmployee}}</abbr>
+							</div>
+						{{/if}}
+					</div>
+					<div class="d-grid gap-2">
+						<button onclick={{action 'copyToClipboard'}} class="btn btn-primary" type="button">
+							{{#if this.codeCopied}}
+								Скопировано!
+							{{else}}
+								Копировать
+							{{/if}}
+						</button>
+					</div>
+				{{/if}}
+			</div>
+		{{/if}}
+	</div>
+</td>
+{{yield}}

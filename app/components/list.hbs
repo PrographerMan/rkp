@@ -1,0 +1,33 @@
+<table class="table table-striped table-hover shadow align-middle mb-5 mt-5">
+    <thead>
+        <tr>
+            <th class="p-3" scope="row">
+                Код
+            </th>
+            <th class="p-3" scope="row">
+                Вид должности
+            </th>
+            <th class="p-3" scope="row">
+                Контрольное число
+            </th>
+            <th class="p-3" scope="row">
+                Категория квалификации
+            </th>
+            <th class="p-3" scope="row">
+                Номер выпуска ЕТКС
+            </th>
+            <th class="p-3" scope="row">
+                Код по ОКЗ
+            </th>
+            <th class="p-3" scope="row">
+                Наименование
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    {{yield this.filteredModels}}
+    </tbody>
+</table>
+{{#if this.isListEmpty}}
+	<p class="text-center">Результатов не найдено</p>
+{{/if}}

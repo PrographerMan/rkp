@@ -1,0 +1,22 @@
+const mongoose = require('mongoose');
+
+const Schema = mongoose.Schema;
+const PositionsSchema = new Schema({
+    OKZ: {
+        type: String
+    },
+    KC: {
+        type: String
+    },
+    NAME: {
+        type: String
+    },
+    ETKS: {
+        type: String
+    },
+    KOD: {
+        type: String
+    },
+});
+
+module.exports = mongoose.model('Positions', PositionsSchema);

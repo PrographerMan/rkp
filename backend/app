@@ -1,0 +1,33 @@
+require('dotenv').config();
+
+const express = require('express');
+const app = express();
+const port = 3000;
+const cors = require('cors');
+
+const connectDB = require('./config/db');
+
+const Positions = require('./models/Positions');
+
+let corsOptions = {
+  origin: ['http://localhost:4200'],
+};
+
+app.use(cors(corsOptions));
+
+connectDB();
+
+app.get('/api/results', cors(corsOptions), async (req, res) => {
+  let data;
+  try {
+    data = await Positions.find();
+  } catch (error) {
+    console.log(error);
+  }
+
+  res.json(data);
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});

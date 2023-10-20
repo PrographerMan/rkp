@@ -1,0 +1,32 @@
+{{page-title "Index"}}
+
+<div class="bg-primary header {{if this.fixedHeader "fixed"}}">
+	<div class="container">
+		<h1 class="mb-4 text-white fs-2">Общероссийский классификатор профессий рабочих, должностей служащих и тарифных разрядов (ОКПДТР)</h1>
+		<div class="mt-3">
+			<Input
+				@value={{this.query}}
+				class="form-control p-3 shadow {{if this.fixedHeader 'mb-3' ''}}"
+				placeholder="Введите наименование профессии"
+				autofocus="autofocus"
+			/>
+			{{#if (not this.fixedHeader)}}
+				<p class="text-white">
+					<span>Данные предоставлены порталом</span>
+					<a class="text-white" href="https://data.mos.ru/">data.mos.ru</a>
+				</p>
+			{{/if}}
+		</div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="container">
+		<List @models={{@model}} @query={{this.query}} as |filteredModels|>
+			{{#each filteredModels as |item|}}
+				<List::Row @item={{item}}></List::Row>
+			{{/each}}
+		</List>
+	</div>
+</div>
+
+{{outlet}}
